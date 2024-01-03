@@ -58,3 +58,9 @@ If you want to learn more about building native executables, please consult http
 Easily start your RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## APIs supported
+1. Add Expense
+2. Update Expense
+3. Delete Expense
+4. Read Expense
