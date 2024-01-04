@@ -33,7 +33,6 @@ public class DailyExpenseEntry {
 
     public void addExpenseEntryList(ExpenseEntry expenseEntry) {
         this.expenseEntryList.add(expenseEntry);
-        this.totalExpense += expenseEntry.getExpense();
     }
 
 }

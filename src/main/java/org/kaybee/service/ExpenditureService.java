@@ -14,24 +14,59 @@ public class ExpenditureService implements IExpenditureService {
     private HashMap<Long, ExpenseEntry> expenseEntryHashMap = new HashMap<>();
     private HashMap<String, DailyExpenseEntry> dailyExpenseEntryHashMap = new HashMap<>();
 
-    
+
     @Override
     public void addExpense(long id, String date, double expense) {
         ExpenseEntry expenseEntry = new ExpenseEntry(id, expense, date);
         expenseEntryHashMap.put(id, expenseEntry);
 
-        if (dailyExpenseEntryHashMap.containsKey(date)) {
-            DailyExpenseEntry dailyExpenseEntry = dailyExpenseEntryHashMap.get(date);
-            dailyExpenseEntry.addExpenseEntryList(expenseEntry);
-        } else {
-            DailyExpenseEntry dailyExpenseEntry = new DailyExpenseEntry(date);
-            dailyExpenseEntry.addExpenseEntryList(expenseEntry);
-            dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
+        DailyExpenseEntry dailyExpenseEntry = (dailyExpenseEntryHashMap.containsKey(date)) ?
+                dailyExpenseEntryHashMap.get(date) : new DailyExpenseEntry((date));
+
+        dailyExpenseEntry.addExpenseEntryList(expenseEntry);
+        double newTotalDailyExpense = dailyExpenseEntry.getTotalExpense() + expenseEntry.getExpense();
+        dailyExpenseEntry.setTotalExpense(newTotalDailyExpense);
+        dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
+    }
+
+    @Override
+    public DailyExpenseEntry getDailyExpense(String date) {
+        if (!dailyExpenseEntryHashMap.containsKey(date)) {
+            // TODO Exception Handling & Logging
+            System.out.println("Invalid Expense date");
         }
+
+        return dailyExpenseEntryHashMap.get(date);
+    }
+
+    @Override
+    public void updateExpense(long id, String date, double expense) {
+        if (!expenseEntryHashMap.containsKey(id)) {
+            // TODO Exception Handling & Logging
+            System.out.println("Invalid Expense Id");
+            return;
+        }
+
+        ExpenseEntry expenseEntry = expenseEntryHashMap.get(id);
+        double oldExpense = expenseEntry.getExpense();
+        expenseEntry.setExpense(expense);
+        expenseEntryHashMap.put(id, expenseEntry);
+
+        double deltaExpense = expense - oldExpense;
+        DailyExpenseEntry dailyExpenseEntry = dailyExpenseEntryHashMap.get(date);
+        double updatedDailyExpense = dailyExpenseEntry.getTotalExpense() + deltaExpense;
+        dailyExpenseEntry.setTotalExpense(updatedDailyExpense);
+        dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
     }
 
     @Override
     public void deleteExpense(long id) {
+        if (!expenseEntryHashMap.containsKey(id)) {
+            // TODO Exception Handling & Logging
+            System.out.println("Invalid Expense Id");
+            return;
+        }
+
         ExpenseEntry expenseEntry = expenseEntryHashMap.get(id);
         String date = expenseEntry.getDate();
         DailyExpenseEntry dailyExpenseEntry = dailyExpenseEntryHashMap.get(date);
@@ -40,12 +75,10 @@ public class ExpenditureService implements IExpenditureService {
             if (e.getId() == id) {
                 double updatedExpense = dailyExpenseEntry.getTotalExpense() - expenseEntry.getExpense();
                 dailyExpenseEntry.setTotalExpense(updatedExpense);
-
-                //save to db
                 dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
+                expenseEntryHashMap.remove(id);
+                return;
             }
         }
-        expenseEntryHashMap.remove(id);
-
     }
 }
