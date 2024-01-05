@@ -33,4 +33,18 @@ public class ExpenseResource {
         expenseEntryList.add(newExpenseEntry);
         return Response.ok(expenseEntryList).build();
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateExpense(ExpenseEntry newExpenseEntry) {
+        expenseEntryList.add(newExpenseEntry);
+        return Response.ok(expenseEntryList).build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteExpense(ExpenseEntry newExpenseEntry) {
+        return Response.ok(expenseEntryList).build();
+    }
 }
