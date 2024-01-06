@@ -16,7 +16,7 @@ public class ExpenditureService implements IExpenditureService {
 
 
     @Override
-    public void addExpense(long id, String date, double expense) {
+    public ExpenseEntry addExpense(long id, String date, double expense) {
         ExpenseEntry expenseEntry = new ExpenseEntry(id, expense, date);
         expenseEntryHashMap.put(id, expenseEntry);
 
@@ -27,6 +27,8 @@ public class ExpenditureService implements IExpenditureService {
         double newTotalDailyExpense = dailyExpenseEntry.getTotalExpense() + expenseEntry.getExpense();
         dailyExpenseEntry.setTotalExpense(newTotalDailyExpense);
         dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
+
+        return expenseEntry;
     }
 
     @Override
@@ -40,11 +42,10 @@ public class ExpenditureService implements IExpenditureService {
     }
 
     @Override
-    public void updateExpense(long id, String date, double expense) {
+    public ExpenseEntry updateExpense(long id, String date, double expense) {
         if (!expenseEntryHashMap.containsKey(id)) {
             // TODO Exception Handling & Logging
             System.out.println("Invalid Expense Id");
-            return;
         }
 
         ExpenseEntry expenseEntry = expenseEntryHashMap.get(id);
@@ -57,6 +58,8 @@ public class ExpenditureService implements IExpenditureService {
         double updatedDailyExpense = dailyExpenseEntry.getTotalExpense() + deltaExpense;
         dailyExpenseEntry.setTotalExpense(updatedDailyExpense);
         dailyExpenseEntryHashMap.put(date, dailyExpenseEntry);
+
+        return expenseEntry;
     }
 
     @Override
@@ -64,7 +67,6 @@ public class ExpenditureService implements IExpenditureService {
         if (!expenseEntryHashMap.containsKey(id)) {
             // TODO Exception Handling & Logging
             System.out.println("Invalid Expense Id");
-            return;
         }
 
         ExpenseEntry expenseEntry = expenseEntryHashMap.get(id);

@@ -1,14 +1,15 @@
 package org.kaybee.service;
 
 import org.kaybee.model.DailyExpenseEntry;
+import org.kaybee.model.ExpenseEntry;
 
 public interface IExpenditureService {
 
-    void addExpense(long id, String date, double expense);
+    ExpenseEntry addExpense(long id, String date, double expense);
 
     DailyExpenseEntry getDailyExpense(String date);
 
-    void updateExpense(long id, String date, double expense);
+    ExpenseEntry updateExpense(long id, String date, double expense);
 
     void deleteExpense(long id);
 
