@@ -2,8 +2,11 @@ package org.kaybee.service;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.kaybee.model.DailyExpenseEntry;
 import org.kaybee.model.ExpenseEntry;
+import org.kaybee.repository.DailyExpenseRepository;
+import org.kaybee.repository.ExpenseRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,12 @@ public class ExpenditureService implements IExpenditureService {
 
     private HashMap<Long, ExpenseEntry> expenseEntryHashMap = new HashMap<>();
     private HashMap<String, DailyExpenseEntry> dailyExpenseEntryHashMap = new HashMap<>();
+
+    @Inject
+    private ExpenseRepository expenseRepository;
+
+    @Inject
+    private DailyExpenseRepository dailyExpenseRepository;
 
 
     @Override
@@ -33,6 +42,9 @@ public class ExpenditureService implements IExpenditureService {
 
     @Override
     public DailyExpenseEntry getDailyExpense(String date) {
+//        dailyExpenseRepository.find
+
+        /* ************************************************************ */
         if (!dailyExpenseEntryHashMap.containsKey(date)) {
             // TODO Exception Handling & Logging
             System.out.println("Invalid Expense date");

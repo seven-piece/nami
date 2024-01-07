@@ -1,10 +1,15 @@
 package org.kaybee.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class DailyExpenseEntry {
 
+    @Id
     private final String date;
     private final List<ExpenseEntry> expenseEntryList;
     private double totalExpense;
