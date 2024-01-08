@@ -11,6 +11,8 @@ import org.kaybee.service.IExpenditureService;
 
 @RequestScoped
 @Path("/v1/expense")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ExpenseController {
 
     private final IExpenditureService expenditureService;
@@ -22,23 +24,25 @@ public class ExpenseController {
 
     @GET
     @Path("/{date}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpense(@PathParam("date") String date) {
+    public Response getDailyExpense(@PathParam("date") String date) {
         DailyExpenseEntry dailyExpense = expenditureService.getDailyExpense(date);
         return Response.ok(dailyExpense).build();
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getExpense(@PathParam("id") long id) {
+        ExpenseEntry expenseEntry = expenditureService.getExpenseEntry(id);
+        return Response.ok(expenseEntry).build();
+    }
+
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response createExpense(ExpenseEntry expenseEntry) {
         ExpenseEntry addedExpense = expenditureService.addExpense(expenseEntry.getId(), expenseEntry.getDate(), expenseEntry.getExpense());
         return Response.ok(addedExpense).build();
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateExpense(ExpenseEntry newExpenseEntry) {
         ExpenseEntry updatedExpenseEntry = expenditureService.updateExpense(newExpenseEntry.getId(), newExpenseEntry.getDate(), newExpenseEntry.getExpense());
         return Response.ok(updatedExpenseEntry).build();
@@ -46,7 +50,6 @@ public class ExpenseController {
 
     @DELETE
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteExpense(@PathParam("id") long id) {
         expenditureService.deleteExpense(id);
         return Response.noContent().build();
