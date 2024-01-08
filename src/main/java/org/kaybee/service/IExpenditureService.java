@@ -9,6 +9,8 @@ public interface IExpenditureService {
 
     DailyExpenseEntry getDailyExpense(String date);
 
+    ExpenseEntry getExpenseEntry(long id);
+
     ExpenseEntry updateExpense(long id, String date, double expense);
 
     void deleteExpense(long id);

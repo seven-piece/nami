@@ -54,6 +54,16 @@ public class ExpenditureService implements IExpenditureService {
     }
 
     @Override
+    public ExpenseEntry getExpenseEntry(long id) {
+        if (!expenseEntryHashMap.containsKey(id)) {
+            // TODO Exception Handling & Logging
+            System.out.println("Invalid Expense Id");
+        }
+
+        return expenseEntryHashMap.get(id);
+    }
+
+    @Override
     public ExpenseEntry updateExpense(long id, String date, double expense) {
         if (!expenseEntryHashMap.containsKey(id)) {
             // TODO Exception Handling & Logging
