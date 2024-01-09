@@ -60,7 +60,8 @@ public class ExpenditureService implements IExpenditureService {
             System.out.println("Invalid Expense Id");
         }
 
-        return expenseEntryHashMap.get(id);
+        ExpenseEntry expenseEntry = expenseEntryHashMap.get(id);
+        return expenseEntry;
     }
 
     @Override
