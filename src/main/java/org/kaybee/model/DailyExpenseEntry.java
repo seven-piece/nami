@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 public class DailyExpenseEntry {
 
-    @Id
     private final String date;
     private final List<ExpenseEntry> expenseEntryList;
     private double totalExpense;
