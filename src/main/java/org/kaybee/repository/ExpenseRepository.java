@@ -21,6 +21,10 @@ public class ExpenseRepository implements PanacheRepository<ExpenseEntry> {
         return findById(id);
     }
 
+    public void saveExpense(ExpenseEntry expenseEntry) {
+        persist(expenseEntry);
+    }
+
     public void deleteExpenseById(long id) {
         deleteById(id);
     }

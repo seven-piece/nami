@@ -42,7 +42,6 @@ public class ExpenditureService implements IExpenditureService {
 
     @Override
     public DailyExpenseEntry getDailyExpense(String date) {
-//        dailyExpenseRepository.find
 
         /* ************************************************************ */
         if (!dailyExpenseEntryHashMap.containsKey(date)) {

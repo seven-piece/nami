@@ -1,7 +1,9 @@
 package org.kaybee.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,11 @@ import java.util.List;
 public class DailyExpenseEntry {
 
     private final String date;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private final List<ExpenseEntry> expenseEntryList;
     private double totalExpense;
 
