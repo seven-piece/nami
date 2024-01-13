@@ -26,11 +26,11 @@ public class ExpenditureService implements IExpenditureService {
 
     @Override
     public ExpenseEntry addExpense(long id, String date, double expense) {
-        ExpenseEntry expenseEntry = new ExpenseEntry(id, expense, date);
-        expenseEntryHashMap.put(id, expenseEntry);
+        ExpenseEntry expenseEntry = new ExpenseEntry(expense, date);
+        expenseEntryHashMap.put(expenseEntry.getId(), expenseEntry);
 
         DailyExpenseEntry dailyExpenseEntry = (dailyExpenseEntryHashMap.containsKey(date)) ?
-                dailyExpenseEntryHashMap.get(date) : new DailyExpenseEntry((date));
+                dailyExpenseEntryHashMap.get(date) : new DailyExpenseEntry(date);
 
         dailyExpenseEntry.addExpenseEntryList(expenseEntry);
         double newTotalDailyExpense = dailyExpenseEntry.getTotalExpense() + expenseEntry.getExpense();

@@ -1,20 +1,23 @@
 package org.kaybee.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "expense_entry")
 public class ExpenseEntry {
 
     @Id
-    @GeneratedValue
-    private final Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
     private Double expense;
-    private final String date;
+    private String date;
 
-    public ExpenseEntry(Long id, Double expense, String date) {
-        this.id = id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private DailyExpenseEntry dailyExpenseEntry;
+
+    public ExpenseEntry() {}
+
+    public ExpenseEntry(Double expense, String date) {
         this.expense = expense;
         this.date = date;
     }
@@ -33,5 +36,13 @@ public class ExpenseEntry {
 
     public String getDate() {
         return date;
+    }
+
+    public DailyExpenseEntry getDailyExpenseEntry() {
+        return dailyExpenseEntry;
+    }
+
+    public void setDailyExpenseEntry(DailyExpenseEntry dailyExpenseEntry) {
+        this.dailyExpenseEntry = dailyExpenseEntry;
     }
 }
